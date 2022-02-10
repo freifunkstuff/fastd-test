@@ -1,0 +1,33 @@
+---
+
+version: '3'
+services:
+  fastd-server:
+    build: .
+    image: fastd
+    privileged: true
+    command:
+      - fastd
+      - --config
+      - /etc/fastd-server.conf
+    networks:
+      fastd:
+        ipv4_address: 172.20.0.2
+  fastd-client:
+    build: .
+    image: fastd
+    privileged: true
+    command:
+      - fastd
+      - --config
+      - /etc/fastd-client.conf
+    networks:
+      fastd:
+        ipv4_address: 172.20.0.3
+
+networks:
+  fastd:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.20.0.0/24
